@@ -8,7 +8,7 @@ Commandes à effectuer avant de lancer l'application :
 
 ## BDD MySQL 
 * name : pwf_gamesheets
-* Créer les tables => à la racine du projet: `php artisan migrate`
+* A la racine du projet, lancer la commande: `php artisan migrate`
 
 ## fichier .env
 * copier le fichier ".env.example" se trouvant à la racine et coller la copie en la renommant ".env"
