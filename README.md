@@ -1,6 +1,7 @@
 # pwf_gamesheets
 Projet fiches ePub (LPW/Flux numérique)
 * require PHP ^7.1.3
+
 Commandes à effectuer avant de lancer l'application :
 * run `composer update` pour télécharger le dossier vendor
 * run `npm install` pour installer les dépendences
