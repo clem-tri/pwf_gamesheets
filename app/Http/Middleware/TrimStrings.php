@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace GameSheets\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\TrimStrings as Middleware;
 

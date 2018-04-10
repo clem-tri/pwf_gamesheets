@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'GameSheets'),
 
     /*
     |--------------------------------------------------------------------------
@@ -154,11 +154,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        GameSheets\Providers\AppServiceProvider::class,
+        GameSheets\Providers\AuthServiceProvider::class,
+        // GameSheets\Providers\BroadcastServiceProvider::class,
+        GameSheets\Providers\EventServiceProvider::class,
+        GameSheets\Providers\RouteServiceProvider::class,
 
     ],
 
