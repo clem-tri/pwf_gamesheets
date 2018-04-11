@@ -15,6 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
+//fiches
+Route::get('/fiche/view', function () {
+    return view('fiche-detail');
+})->name('ficheView');
+
+Route::get('/fiche/create', function () {
+    return view('fiche-create');
+})->name('ficheCreate');
+
+//contact
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

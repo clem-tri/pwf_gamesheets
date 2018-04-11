@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => GameSheets\User::class,
+            'model' => GameSheets\Models\User::class,
         ],
 
         // 'users' => [

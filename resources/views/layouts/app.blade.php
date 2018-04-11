@@ -9,6 +9,12 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('css')
     <style>
+        body{
+            padding-top:70px;
+            background-image: url({{asset('img/background.jpg')}});
+            background-repeat: no-repeat;
+            background-attachment:fixed;
+        }
         .bg-darkblue {
             background-color: #014465;
         }
@@ -21,6 +27,14 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('ficheCreate')}}">Créer une fiche</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('contact')}}">Contact</a>
+            </li>
+        </ul>
         <ul class="navbar-nav ml-auto">
             @guest
             <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('Connexion')</a></li>
