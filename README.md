@@ -6,14 +6,16 @@ Commandes à effectuer avant de lancer l'application :
 * run `composer update` pour télécharger le dossier vendor
 * run `npm install` pour installer les dépendences
 
-## BDD MySQL 
-* name : pwf_gamesheets
-* A la racine du projet, lancer la commande: `php artisan migrate`
 
 ## fichier .env
 * copier le fichier ".env.example" se trouvant à la racine et coller la copie en la renommant ".env"
 * configurer les paramètres suivant:  `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
 * lancer la commande `php artisan key:generate` pour génerer la valeur de la clé unique du paramètre `APP_KEY`
+
+## BDD MySQL 
+* name : pwf_gamesheets
+* A la racine du projet, lancer la commande: `php artisan migrate`
+
 
 ## Virtualhost (conseillé)
 
