@@ -16,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
         'GameSheets\Events\Event' => [
             'GameSheets\Listeners\EventListener',
         ],
+        'GameSheets\Events\GenreSaving' => [
+            'GameSheets\Listeners\GenreSaving',
+        ]
+
     ];
 
     /**

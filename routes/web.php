@@ -15,15 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
-//fiches
-Route::get('/fiche/view', function () {
-    return view('fiche-detail');
-})->name('ficheView');
-
-Route::get('/fiche/create', function () {
-    return view('fiche-create');
-})->name('ficheCreate');
-
 //contact
 
 Route::get('/contact', function () {
@@ -33,3 +24,26 @@ Route::get('/contact', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+// ADMIN
+
+Route::middleware('admin')->group(function () {
+    Route::resource ('genre', 'GenreController', [
+        'except' => 'show'
+    ]);
+    Route::resource ('editeur', 'EditeurController', [
+        'except' => 'show'
+    ]);
+});
+
+
+
+//
+
+Route::middleware('auth')->group(function () {
+    Route::resource('fiche', 'FicheController', [
+        'only' => ['create', 'store', 'destroy']
+    ]);
+});

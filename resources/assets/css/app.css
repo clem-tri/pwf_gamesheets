@@ -1,0 +1,13 @@
+body{
+    padding-top:70px;
+    background-image: url('../img/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+}
+.bg-darkblue {
+    background-color: #014465;
+}
+
+.custom-file-label::after {
+    content: "Parcourir";
+}

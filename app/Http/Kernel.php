@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'guest' => \GameSheets\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin' => \GameSheets\Http\Middleware\Admin::class,
     ];
 }

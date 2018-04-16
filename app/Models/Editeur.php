@@ -9,4 +9,9 @@ class Editeur extends Model
     protected $fillable = [
         'nom', 'logo',
     ];
+
+    public function fiches()
+    {
+        return $this->hasMany(Fiche::class);
+    }
 }
