@@ -5,7 +5,7 @@
             @lang('Gestion des éditeurs')
         @endslot
 
-        <table class="table table-dark">
+        <table class="table">
             <tbody>
             @foreach($editeurs as $editeur)
                 <tr>

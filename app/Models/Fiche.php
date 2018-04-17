@@ -3,9 +3,14 @@
 namespace GameSheets\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use GameSheets\Events\FicheSaving;
 
 class Fiche extends Model
 {
+    protected $dispatchesEvents = [
+        'saving' => FicheSaving::class
+    ];
+
     public function editeur()
     {
         return $this->belongsTo(Editeur::class);

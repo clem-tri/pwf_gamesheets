@@ -23,7 +23,7 @@ Route::get('/contact', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 
 
@@ -34,6 +34,9 @@ Route::middleware('admin')->group(function () {
         'except' => 'show'
     ]);
     Route::resource ('editeur', 'EditeurController', [
+        'except' => 'show'
+    ]);
+    Route::resource ('developpeur', 'DeveloppeurController', [
         'except' => 'show'
     ]);
 });

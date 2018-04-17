@@ -2,10 +2,21 @@
 
 namespace GameSheets\Http\Controllers;
 
+use GameSheets\Repositories\FicheRepository;
 use Illuminate\Http\Request;
 
 class FicheController extends Controller
 {
+
+
+    protected $repository;
+
+
+    public function __construct(FicheRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +45,16 @@ class FicheController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'image' => 'required|mimes:jpeg,jpg,png|max:2000',
+            'site' => 'nullable|string|max:255'
+
+
+        ]);
+        $this->repository->store($request);
+
+        return back()->with('ok', __("La fiche a bien été enregistrée"));
     }
 
     /**

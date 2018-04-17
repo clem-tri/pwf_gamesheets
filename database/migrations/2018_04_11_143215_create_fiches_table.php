@@ -19,11 +19,11 @@ class CreateFichesTable extends Migration
             $table->integer('developpeur_id')->unsigned();
             $table->integer('genre_id')->unsigned();
             $table->string('nom');
-            $table->year("annee");
+            $table->date("annee");
             $table->string('image');
-            $table->string('synopsis')->nullable();
+            $table->text('synopsis')->nullable();
             $table->tinyInteger("en_ligne");
-            $table->string('site');
+            $table->string('site')->nullable();
             $table->integer('created_by')->unsigned();
             $table->foreign('editeur_id')->references('id')->on('editeurs')->onDelete('cascade');
             $table->foreign('developpeur_id')->references('id')->on('developpeurs')->onDelete('cascade');

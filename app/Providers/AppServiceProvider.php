@@ -2,6 +2,8 @@
 
 namespace GameSheets\Providers;
 
+use GameSheets\Models\Developpeur;
+use GameSheets\Models\Editeur;
 use GameSheets\Models\Genre;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
 
         if(request()->server("SCRIPT_NAME") !== 'artisan') {
             view ()->share ('genres', Genre::all ());
+            view()->share('editeurs', Editeur::all());
+            view()->share('developpeurs', Developpeur::all());
         }
     }
 

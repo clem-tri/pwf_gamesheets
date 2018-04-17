@@ -2,17 +2,17 @@
 
 namespace GameSheets\Http\Controllers;
 
-use GameSheets\Models\Editeur;
+use GameSheets\Models\Developpeur;
+use GameSheets\Repositories\DeveloppeurRepository;
 use Illuminate\Http\Request;
-use GameSheets\Repositories\EditeurRepository;
 
-class EditeurController extends Controller
+class DeveloppeurController extends Controller
 {
 
     protected $repository;
 
 
-    public function __construct(EditeurRepository $repository)
+    public function __construct(DeveloppeurRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -24,7 +24,7 @@ class EditeurController extends Controller
      */
     public function index()
     {
-        return view('editeurs.index');
+        return view('developpeurs.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class EditeurController extends Controller
      */
     public function create()
     {
-        return view('editeurs.create');
+        return view('developpeurs.create');
     }
 
     /**
@@ -53,7 +53,7 @@ class EditeurController extends Controller
         ]);
         $this->repository->store($request);
 
-        return back()->with('ok', __("L'editeur a bien été enregistrée"));
+        return back()->with('ok', __("Le développeur a bien été enregistré"));
     }
 
     /**
@@ -70,24 +70,23 @@ class EditeurController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Editeur  $editeur
+     * @param  Developpeur $developpeur
      * @return \Illuminate\Http\Response
      */
-    public function edit(Editeur $editeur)
+    public function edit(Developpeur $developpeur)
     {
-        return view('editeurs.edit', compact('editeur'));
+        return view('developpeurs.edit', compact('developpeur'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Editeur  $editeur
+     * @param  Developpeur  $developpeur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Editeur $editeur)
+    public function update(Request $request, Developpeur $developpeur)
     {
-
         $request->validate([
             'nom' => 'required|string|max:255',
             'logo' => '|mimes:jpeg,jpg,png|max:2000',
@@ -95,21 +94,20 @@ class EditeurController extends Controller
 
         ]);
 
-        $this->repository->update($request, $editeur);
+        $this->repository->update($request, $developpeur);
 
-        return redirect()->route('home')->with('ok', __('L\'éditeur a bien été modifiée'));
+        return redirect()->route('home')->with('ok', __('Le développeur a bien été modifié'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Editeur  $editeur
+     * @param  Developpeur $developpeur
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Editeur $editeur)
+    public function destroy($developpeur)
     {
-        $this->repository->destroyImg($editeur);
-        $editeur->delete();
+        $developpeur->delete();
         return response()->json();
     }
 }

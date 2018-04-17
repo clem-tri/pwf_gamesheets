@@ -12,7 +12,7 @@
 </head>
 <body>
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-darkblue">
-    <a class="navbar-brand" href="{{route("index")}}">{{ config('app.name', 'GameSheets') }}</a>
+    <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name', 'GameSheets') }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -34,11 +34,18 @@
                     <a class="dropdown-item" href="{{ route('editeur.create') }}">
                         <i class="fa fa-plus fa-lg"></i> @lang('Ajouter un éditeur')
                     </a>
+                    <a class="dropdown-item" href="{{ route('developpeur.create') }}">
+                        <i class="fa fa-plus fa-lg"></i> @lang('Ajouter un développeur')
+                    </a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('genre.index') }}">
                         <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les genres')
                     </a>
                     <a class="dropdown-item" href="{{ route('editeur.index') }}">
                         <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les éditeurs')
+                    </a>
+                    <a class="dropdown-item" href="{{ route('developpeur.index') }}">
+                        <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les développeurs')
                     </a>
                 </div>
             </li>

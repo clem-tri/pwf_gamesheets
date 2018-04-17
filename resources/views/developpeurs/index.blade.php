@@ -2,17 +2,18 @@
 @section('card')
     @component('components.card')
         @slot('title')
-            @lang('Gestion des genres')
+            @lang('Gestion des développeurs')
         @endslot
 
         <table class="table">
             <tbody>
-            @foreach($genres as $genre)
+            @foreach($developpeurs as $developpeur)
                 <tr>
-                    <td>{{ $genre->nom }}</td>
+                    <td>{{ $developpeur->nom }}</td>
+                    <td><img src="{{asset("storage/$developpeur->logo")}}" style="width: 34px;"/></td>
                     <td>
-                        <a type="button" href="{{ route('genre.destroy', $genre->id) }}" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="@lang('Supprimer le genre') {{ $genre->nom }}"><i class="fas fa-trash fa-lg"></i></a>
-                        <a type="button" href="{{ route('genre.edit', $genre->id) }}" class="btn btn-warning btn-sm pull-right mr-2" data-toggle="tooltip" title="@lang('Modifier le genre') {{ $genre->nom }}"><i class="fas fa-edit fa-lg"></i></a>
+                        <a type="button" href="{{ route('developpeur.destroy', $developpeur->id) }}" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="@lang('Supprimer le developpeur') {{ $developpeur->nom }}"><i class="fas fa-trash fa-lg"></i></a>
+                        <a type="button" href="{{ route('developpeur.edit', $developpeur->id) }}" class="btn btn-warning btn-sm pull-right mr-2" data-toggle="tooltip" title="@lang('Modifier le developpeur') {{ $developpeur->nom }}"><i class="fas fa-edit fa-lg"></i></a>
                     </td>
                 </tr>
             @endforeach
@@ -31,7 +32,7 @@
                 let that = $(this)
                 e.preventDefault()
                 swal({
-                    title: '@lang('Vraiment supprimer ce genre ?')',
+                    title: '@lang('Vraiment supprimer ce développeur?')',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#DD6B55',

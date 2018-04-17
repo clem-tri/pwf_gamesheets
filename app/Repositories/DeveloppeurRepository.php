@@ -2,16 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: Clément
- * Date: 16/04/2018
- * Time: 15:51
+ * Date: 17/04/2018
+ * Time: 11:00
  */
 
 namespace GameSheets\Repositories;
 
-use GameSheets\Models\Editeur;
+use GameSheets\Models\Developpeur;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class EditeurRepository
+class DeveloppeurRepository
 {
 
     /**
@@ -20,36 +21,36 @@ class EditeurRepository
     public function store($request){
         $path = Storage::disk('public')->put('', $request->file('logo'));
 
-        $editeur = new Editeur;
-        $editeur->nom = $request->nom;
-        $editeur->logo = $path;
-        $editeur->save();
+        $developpeur = new Developpeur();
+        $developpeur->nom = $request->nom;
+        $developpeur->logo = $path;
+        $developpeur->save();
     }
 
     /**
      * @param  \Illuminate\Http\Request  $request
-     * @param  Editeur $editeur
+     * @param  Developpeur $developpeur
      */
-    public function update($request, $editeur){
+    public function update($request, $developpeur){
 
         if($request->logo != null){
             // on supprime la photo actuelle
-            Storage::disk('public')->delete($editeur->logo);
+            Storage::disk('public')->delete($developpeur->logo);
             // on ajoute la nouvelle
             $path = Storage::disk('public')->put('', $request->file('logo'));
 
 
-            $editeur->logo = $path;
+            $developpeur->logo = $path;
 
         }
         // on change les propriétés de l'objet pour update la bdd
-        $editeur->nom = $request->nom;
+        $developpeur->nom = $request->nom;
 
-        $editeur->save();
+        $developpeur->save();
     }
 
     /**
-     * @param Editeur $request
+     * @param Request $request
      */
     public function destroyImg($request){
         Storage::disk('public')->delete($request->logo);

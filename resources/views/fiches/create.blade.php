@@ -6,6 +6,14 @@
         @endslot
         <form method="POST" action="{{ route('fiche.store') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
+
+            @include('partials.form-group', [
+               'title' => __('Nom'),
+               'type' => 'text',
+               'name' => 'nom',
+               'required' => true,
+               ])
+
             <div class="form-group{{ $errors->has('fiche') ? ' is-invalid' : '' }}">
                 <label for="image">@lang('Image')</label>
                 <div class="custom-file">
@@ -18,20 +26,57 @@
                     @endif
                 </div>
             </div>
-            <div class="form-group">
-                <label for="genre_id">@lang('Genre')</label>
-                <select id="genre_id" name="genre_id" class="form-control">
-                    @foreach($genres as $genre)
-                        <option value="{{ $genre->id }}">{{ $genre->nom }}</option>
-                    @endforeach
-                </select>
-            </div>
-            @include('partials.form-group', [
-                'title' => __('Synopsis (optionnel)'),
-                'type' => 'text',
-                'name' => 'description',
-                'required' => false,
+
+
+
+            @include('partials.form-group-select', [
+               'title' => __('Genre'),
+               'name' => 'genre_id',
+               'listoptions'=> $genres,
+               'property' => 'nom',
+               'required' => true,
+               ])
+
+            @include('partials.form-group-select', [
+                'title' => __('Développeur'),
+                'name' => 'developpeur_id',
+                'listoptions'=> $developpeurs,
+                'property' => 'nom',
+                'required' => true,
                 ])
+
+
+            @include('partials.form-group-select', [
+                'title' => __('Editeur'),
+                'name' => 'editeur_id',
+                'listoptions'=> $editeurs,
+                'property' => 'nom',
+                'required' => true,
+                ])
+
+            <div class="form-group{{ $errors->has('fiche') ? ' is-invalid' : '' }}">
+                <label for="synopsis">@lang('Synopsis (optionnel)')</label>
+                <textarea class="form-control" rows="5" id="synopsis" name="synopsis" ></textarea>
+            </div>
+
+            @include('partials.form-group', [
+            'title' => __('Date de sortie'),
+            'type' => 'date',
+            'name' => 'annee',
+            'required' => true,
+            ])
+
+            <div class="checkbox">
+                <label for="en_ligne">Jouable en ligne</label>
+                    <input class=" checkbox-inline" id="en_ligne" name="en_ligne" type="checkbox">
+            </div>
+
+            @include('partials.form-group', [
+            'title' => __('Site internet'),
+            'type' => 'text',
+            'name' => 'site',
+            'required' => true,
+            ])
             @component('components.button')
                 @lang('Envoyer')
             @endcomponent

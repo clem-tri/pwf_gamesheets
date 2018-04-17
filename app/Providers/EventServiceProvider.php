@@ -19,6 +19,10 @@ class EventServiceProvider extends ServiceProvider
         'GameSheets\Events\GenreSaving' => [
             'GameSheets\Listeners\GenreSaving',
         ]
+        ,
+        'GameSheets\Events\FicheSaving' => [
+            'GameSheets\Listeners\FicheSaving',
+        ]
 
     ];
 
