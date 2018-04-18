@@ -37,7 +37,7 @@ class GenreController extends Controller
     {
         Genre::create($request->all());
 
-        return redirect()->route('home')->with('ok', __('Le genre a bien été enregistré'));
+        return back()->with('ok', __('Le genre a bien été enregistré'));
     }
 
     /**

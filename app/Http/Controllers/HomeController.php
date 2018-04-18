@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $fiches = Fiche::paginate(8);
+        $fiches = Fiche::paginate(8)->sortByDesc('created_at');
 
         return view('home', compact('fiches'));
     }

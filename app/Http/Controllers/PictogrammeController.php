@@ -2,17 +2,17 @@
 
 namespace GameSheets\Http\Controllers;
 
-use GameSheets\Models\Editeur;
+use GameSheets\Models\Pictogramme;
+use GameSheets\Repositories\PictogrammeRepository;
 use Illuminate\Http\Request;
-use GameSheets\Repositories\EditeurRepository;
 
-class EditeurController extends Controller
+class PictogrammeController extends Controller
 {
 
     protected $repository;
 
 
-    public function __construct(EditeurRepository $repository)
+    public function __construct(PictogrammeRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -24,7 +24,7 @@ class EditeurController extends Controller
      */
     public function index()
     {
-        return view('editeurs.index');
+        return view('pictogrammes.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class EditeurController extends Controller
      */
     public function create()
     {
-        return view('editeurs.create');
+        return view('pictogrammes.create');
     }
 
     /**
@@ -53,7 +53,7 @@ class EditeurController extends Controller
         ]);
         $this->repository->store($request);
 
-        return redirect()->route('editeur.index')->with('ok', __("L'editeur a bien été enregistrée"));
+        return redirect()->route('pictogramme.index')->with('ok', __("Le pictogramme a bien été enregistré"));
     }
 
     /**
@@ -70,47 +70,37 @@ class EditeurController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Editeur  $editeur
+     * @param  Pictogramme  $pictogramme
      * @return \Illuminate\Http\Response
      */
-    public function edit(Editeur $editeur)
+    public function edit(Pictogramme $pictogramme)
     {
-        return view('editeurs.edit', compact('editeur'));
+        return view('pictogrammes.edit', compact('pictogramme'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Editeur  $editeur
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Editeur $editeur)
+    public function update(Request $request, $id)
     {
-
-        $request->validate([
-            'nom' => 'required|string|max:255',
-            'logo' => 'nullable|mimes:jpeg,jpg,png|max:2000',
-
-
-        ]);
-
-        $this->repository->update($request, $editeur);
-
-        return back()->with('ok', __('L\'éditeur a bien été modifiée'));
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Editeur $editeur
+     * @param  Pictogramme $pictogramme
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Editeur $editeur)
+    public function destroy(Pictogramme $pictogramme)
     {
-        $this->repository->destroyImg($editeur);
-        $editeur->delete();
+        $this->repository->destroyImg($pictogramme);
+        $pictogramme->delete();
         return response()->json();
     }
 }

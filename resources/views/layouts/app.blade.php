@@ -37,7 +37,15 @@
                     <a class="dropdown-item" href="{{ route('developpeur.create') }}">
                         <i class="fa fa-plus fa-lg"></i> @lang('Ajouter un développeur')
                     </a>
+                    <a class="dropdown-item" href="{{ route('pictogramme.create') }}">
+                        <i class="fa fa-plus fa-lg"></i> @lang('Ajouter un pictogramme')
+                    </a>
+
                     <div class="dropdown-divider"></div>
+
+                    <a class="dropdown-item" href="{{ route('fiche.index') }}">
+                        <i class="fas fa-sticky-note fa-lg"></i> @lang('Gérer les fiches')
+                    </a>
                     <a class="dropdown-item" href="{{ route('genre.index') }}">
                         <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les genres')
                     </a>
@@ -46,6 +54,9 @@
                     </a>
                     <a class="dropdown-item" href="{{ route('developpeur.index') }}">
                         <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les développeurs')
+                    </a>
+                    <a class="dropdown-item" href="{{ route('pictogramme.index') }}">
+                        <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les pictogrammes')
                     </a>
                 </div>
             </li>

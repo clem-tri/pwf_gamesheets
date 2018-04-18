@@ -17,7 +17,7 @@ class Fiche extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function developpeur(){
@@ -26,5 +26,18 @@ class Fiche extends Model
 
     public function genre(){
         return $this->belongsTo(Genre::class);
+    }
+
+    public function extensions()
+    {
+        return $this->hasMany(Extension::class);
+    }
+
+    public function pictogrammes(){
+        return $this->belongsToMany(Pictogramme::class, 'fiche_pictos');
+    }
+
+    public function plateformes(){
+        return $this->belongsToMany(Plateforme::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace GameSheets\Http\Controllers;
 
+use GameSheets\Models\Fiche;
 use GameSheets\Repositories\FicheRepository;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,8 @@ class FicheController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('fiches.index');
     }
 
     /**
@@ -54,7 +56,7 @@ class FicheController extends Controller
         ]);
         $this->repository->store($request);
 
-        return back()->with('ok', __("La fiche a bien été enregistrée"));
+        return redirect()->route('home')->with('ok', __("La fiche a bien été enregistrée"));
     }
 
     /**
@@ -74,31 +76,44 @@ class FicheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Fiche $fiche)
     {
-        //
+        return view('fiches.edit', compact('fiche'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Fiche $fiche
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Fiche $fiche)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'image' => 'nullable|mimes:jpeg,jpg,png|max:2000',
+            'site' => 'nullable|string|max:255'
+
+
+        ]);
+
+        $this->repository->update($request,$fiche);
+
+        return redirect()->route('fiche.index')->with('ok', __("La fiche a bien été mise à jour"));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Fiche $fiche
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Fiche $fiche)
     {
-        //
+        $this->repository->destroyImg($fiche);
+        $fiche->delete();
+        return response()->json();
     }
 }

@@ -39,6 +39,14 @@ Route::middleware('admin')->group(function () {
     Route::resource ('developpeur', 'DeveloppeurController', [
         'except' => 'show'
     ]);
+    Route::resource ('fiche', 'FicheController', [
+        'except' => 'show'
+    ]);
+
+    Route::resource ('pictogramme', 'PictogrammeController', [
+        'except' => 'show'
+    ]);
+
 });
 
 

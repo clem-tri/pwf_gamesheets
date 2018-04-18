@@ -53,7 +53,7 @@ class DeveloppeurController extends Controller
         ]);
         $this->repository->store($request);
 
-        return back()->with('ok', __("Le développeur a bien été enregistré"));
+        return redirect()->route('developpeur.index')->with('ok', __("Le développeur a bien été enregistré"));
     }
 
     /**
@@ -96,7 +96,7 @@ class DeveloppeurController extends Controller
 
         $this->repository->update($request, $developpeur);
 
-        return redirect()->route('home')->with('ok', __('Le développeur a bien été modifié'));
+        return back()->with('ok', __('Le développeur a bien été modifié'));
     }
 
     /**
@@ -104,6 +104,7 @@ class DeveloppeurController extends Controller
      *
      * @param  Developpeur $developpeur
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($developpeur)
     {
