@@ -2,11 +2,13 @@
 
 namespace GameSheets\Http\Controllers;
 
-use GameSheets\Models\Genre;
+use GameSheets\Models\Plateforme;
 use Illuminate\Http\Request;
 
-class GenreController extends Controller
+class PlateformeController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,7 @@ class GenreController extends Controller
      */
     public function index()
     {
-        return view('genres.index');
+        return view('plateformes.index');
     }
 
     /**
@@ -24,7 +26,7 @@ class GenreController extends Controller
      */
     public function create()
     {
-        return view('genres.create');
+        return view('plateformes.create');
     }
 
     /**
@@ -35,9 +37,9 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        Genre::create($request->all());
+        Plateforme::create($request->all());
 
-        return back()->with('ok', __('Le genre a bien été enregistré'));
+        return redirect()->route('plateforme.index')->with('ok', __("La plateforme a bien été enregistrée"));
     }
 
     /**
@@ -57,37 +59,35 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Genre $genre)
+    public function edit(Plateforme $plateforme)
     {
-        return view('genres.edit', compact('genre'));
+        return view('plateformes.edit', compact('plateforme'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Genre  $genre
+     * @param  Plateforme  $plateforme
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Genre $genre)
+    public function update(Request $request, Plateforme $plateforme)
     {
-        $genre->update($request->all());
+        $plateforme->update($request->all());
 
-        return redirect()->route('genre.index')->with('ok', __('Le genre a bien été modifié'));
+        return redirect()->route('plateforme.index')->with('ok', __('La plateforme a bien été modifiée'));
     }
-
-
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Genre $genre
+     * @param  Plateforme $plateforme
      * @return \Illuminate\Http\Response
      * @throws \Exception
      */
-    public function destroy(Genre $genre)
+    public function destroy(Plateforme $plateforme)
     {
-        $genre->delete();
+        $plateforme->delete();
 
         return response()->json();
     }

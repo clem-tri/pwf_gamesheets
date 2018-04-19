@@ -39,7 +39,7 @@
                         <p class="card-text">
                             {{$synopsis = strlen($fiche->synopsis) > 150 ? substr($fiche->synopsis,0,150)."..." : $fiche->synopsis}}
                         </p>
-                        <a href="#" class="btn btn-primary">Voir fiche</a>
+                        <a href="{{route("fiche.show", $fiche->id)}}" class="btn btn-primary">Voir fiche</a>
                     </div>
                 </div>
             @endforeach

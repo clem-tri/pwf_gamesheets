@@ -21,6 +21,7 @@ class FicheRepository
      */
     public function store($request){
 
+
         $path = Storage::disk('public')->put('', $request->file('image'));
 
         $fiche = new Fiche;
@@ -34,6 +35,8 @@ class FicheRepository
         $fiche->en_ligne = is_null($request->en_ligne) ? 0 : 1;
         $fiche->site = $request->site;
         $fiche->save();
+        $fiche->plateformes()->attach($request->Plateformes);
+        $fiche->pictogrammes()->attach($request->Pictogrammes);
     }
 
     /**
@@ -63,13 +66,19 @@ class FicheRepository
         $fiche->site = $request->site;
 
         $fiche->save();
+
+        $fiche->plateformes()->sync($request->Plateformes);
+        $fiche->pictogrammes()->sync($request->Pictogrammes);
     }
 
     /**
      * @param Request $request
      */
-    public function destroyImg($request){
+    public function destroy(Fiche $request){
         Storage::disk('public')->delete($request->image);
+        $request->plateformes()->detach();
+        $request->pictogrammes()->detach();
+
     }
 
 }

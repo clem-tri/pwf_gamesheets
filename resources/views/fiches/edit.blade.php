@@ -33,6 +33,42 @@
                 <img id="currentImg" class="img-fluid img-thumbnail" src="{{asset('storage/'.$fiche->image)}}"/>
             </div>
 
+            <div class="form-group">
+                <label>Plateformes</label>
+                <ul>
+                    @foreach($plateformes as $plateforme)
+                        <li style="display: inline-list-item;">
+                            <label for="Plateforme_{{$plateforme->id}}">{{$plateforme->nom}}</label>
+                            <input class=" checkbox-inline" id="Plateforme_{{$plateforme->id}}" name="Plateformes[]" value="{{$plateforme->id}}" type="checkbox"
+                            @foreach($fiche->plateformes as $fplateforme)
+                                @if($plateforme->id == $fplateforme->id)
+                                        checked="checked"
+                                        @endif
+                            @endforeach
+                            >
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label>Pictogrammes</label>
+                <ul>
+                    @foreach($pictogrammes as $pictogramme)
+                        <li style="display: inline-block;">
+                            <img width="20%" src="{{asset("storage/$pictogramme->logo")}}"/>
+                            <input class=" checkbox-inline" id="Pictogramme_{{$pictogramme->id}}" name="Pictogrammes[]" value="{{$pictogramme->id}}" type="checkbox"
+                                   @foreach($fiche->pictogrammes as $fpictogramme)
+                                   @if($pictogramme->id == $fpictogramme->id)
+                                   checked="checked"
+                                    @endif
+                                    @endforeach
+                            >
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
 
 
             @include('partials.form-group-select', [

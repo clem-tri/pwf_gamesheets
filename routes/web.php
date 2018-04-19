@@ -11,6 +11,9 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('index');
@@ -39,11 +42,13 @@ Route::middleware('admin')->group(function () {
     Route::resource ('developpeur', 'DeveloppeurController', [
         'except' => 'show'
     ]);
-    Route::resource ('fiche', 'FicheController', [
+    Route::resource ('fiche', 'FicheController');
+
+    Route::resource ('pictogramme', 'PictogrammeController', [
         'except' => 'show'
     ]);
 
-    Route::resource ('pictogramme', 'PictogrammeController', [
+    Route::resource ('plateforme', 'PlateformeController', [
         'except' => 'show'
     ]);
 
@@ -55,6 +60,6 @@ Route::middleware('admin')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('fiche', 'FicheController', [
-        'only' => ['create', 'store', 'destroy']
+        'only' => ['show','create', 'store', 'destroy']
     ]);
 });

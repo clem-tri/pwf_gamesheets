@@ -82,12 +82,22 @@ class PictogrammeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Pictogramme $pictogramme
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pictogramme $pictogramme)
     {
-        //
+
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'logo' => 'nullable|mimes:jpeg,jpg,png|max:2000',
+
+
+        ]);
+
+        $this->repository->update($request, $pictogramme);
+
+        return redirect()->route('pictogramme.index')->with('ok', __('Le pictogramme a bien été modifié'));
     }
 
     /**

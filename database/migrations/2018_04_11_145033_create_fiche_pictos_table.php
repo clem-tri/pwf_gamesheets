@@ -19,7 +19,6 @@ class CreateFichePictosTable extends Migration
             $table->integer('fiche_id')->unsigned();
             $table->foreign('pictogramme_id')->references('id')->on('pictogrammes')->onDelete('cascade');
             $table->foreign('fiche_id')->references('id')->on('fiches')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

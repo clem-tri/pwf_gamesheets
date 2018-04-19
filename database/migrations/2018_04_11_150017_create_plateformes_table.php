@@ -16,7 +16,6 @@ class CreatePlateformesTable extends Migration
         Schema::create('plateformes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nom');
-            $table->string('logo');
             $table->timestamps();
         });
     }

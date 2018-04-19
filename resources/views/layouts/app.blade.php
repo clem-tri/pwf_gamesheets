@@ -40,6 +40,9 @@
                     <a class="dropdown-item" href="{{ route('pictogramme.create') }}">
                         <i class="fa fa-plus fa-lg"></i> @lang('Ajouter un pictogramme')
                     </a>
+                    <a class="dropdown-item" href="{{ route('plateforme.create') }}">
+                        <i class="fa fa-plus fa-lg"></i> @lang('Ajouter une plateforme')
+                    </a>
 
                     <div class="dropdown-divider"></div>
 
@@ -57,6 +60,9 @@
                     </a>
                     <a class="dropdown-item" href="{{ route('pictogramme.index') }}">
                         <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les pictogrammes')
+                    </a>
+                    <a class="dropdown-item" href="{{ route('plateforme.index') }}">
+                        <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les plateformes')
                     </a>
                 </div>
             </li>

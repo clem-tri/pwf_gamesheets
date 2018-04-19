@@ -62,12 +62,12 @@ class FicheController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Fiche $fiche
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Fiche $fiche)
     {
-        //
+        return view('fiches.show', compact('fiche'));
     }
 
     /**
@@ -112,7 +112,7 @@ class FicheController extends Controller
      */
     public function destroy(Fiche $fiche)
     {
-        $this->repository->destroyImg($fiche);
+        $this->repository->destroy($fiche);
         $fiche->delete();
         return response()->json();
     }

@@ -19,7 +19,6 @@ class CreateFichePlateformesTable extends Migration
             $table->integer('fiche_id')->unsigned();
             $table->foreign('plateforme_id')->references('id')->on('plateformes')->onDelete('cascade');
             $table->foreign('fiche_id')->references('id')->on('fiches')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

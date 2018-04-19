@@ -27,6 +27,46 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label>Plateformes</label>
+                <ul>
+            @foreach($plateformes as $plateforme)
+                <li style="display: inline-list-item;">
+                    <label for="Plateforme_{{$plateforme->id}}">{{$plateforme->nom}}</label>
+                    <input class=" checkbox-inline" id="Plateforme_{{$plateforme->id}}" name="Plateformes[]" value="{{$plateforme->id}}" type="checkbox">
+                </li>
+            @endforeach
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label>Pictogrammes</label>
+                <ul>
+                    @foreach($pictogrammes as $pictogramme)
+                        <li style="display: inline-block;">
+                            <img width="20%" src="{{asset("storage/$pictogramme->logo")}}"/>
+                            <input class=" checkbox-inline" id="Pictogramme_{{$pictogramme->id}}" name="Pictogrammes[]" value="{{$pictogramme->id}}" type="checkbox">
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label for="extension">Extension(s) :</label>
+                <div class="input-group">
+                    <input class="form-control" id="extension" name="extension">
+
+                    <button id="addExtension" type="button" class="btn btn-success" ><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div id="extensions">
+                    <ul></ul>
+                </div>
+            </div>
+
+
 
 
             @include('partials.form-group-select', [
@@ -91,5 +131,11 @@
                 $(this).next('.custom-file-label').html(fileName)
             })
         })
+    </script>
+    <script>
+        $( "#addExtension" ).click(function() {
+            $( "#extensions").find(">ul" ).append( "<li>"+$("#extension").val()+"</li>" );
+        });
+
     </script>
 @endsection

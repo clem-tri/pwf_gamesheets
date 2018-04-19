@@ -38,6 +38,6 @@ class Fiche extends Model
     }
 
     public function plateformes(){
-        return $this->belongsToMany(Plateforme::class);
+        return $this->belongsToMany(Plateforme::class, "fiche_plateformes");
     }
 }

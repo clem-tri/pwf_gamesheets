@@ -7,6 +7,7 @@ use GameSheets\Models\Editeur;
 use GameSheets\Models\Fiche;
 use GameSheets\Models\Genre;
 use GameSheets\Models\Pictogramme;
+use GameSheets\Models\Plateforme;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
             view()->share('editeurs', Editeur::all());
             view()->share('developpeurs', Developpeur::all());
             view()->share('pictogrammes', Pictogramme::all());
+            view()->share('plateformes', Plateforme::all());
             view()->share('fiches', Fiche::all());
         }
     }
