@@ -69,6 +69,27 @@
                 </ul>
             </div>
 
+            <div class="form-group">
+                <label for="extension">Extension(s) :</label>
+                <div class="input-group">
+                    <input class="form-control" id="extension" name="extension">
+
+                    <button id="addExtension" type="button" class="btn btn-success" ><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div id="extensions">
+                    @foreach($fiche->extensions as $extension)
+                        <div class="input-group">
+                            <input class="form-control" id="Extensions_{{$extension->id}}" name="Extensions[{{$extension->id}}]" value="{{$extension->nom}}"/>
+                            <a type="button" href="{{ route('extension.destroy', $extension->id) }}" class="btn btn-danger btn-sm pull-right deleteExtension" data-toggle="tooltip" title="@lang('Supprimer l\'extension') {{ $extension->nom }}"><i class="fas fa-times fa-lg"></i></a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+
 
 
             @include('partials.form-group-select', [
@@ -140,11 +161,81 @@
 @endsection
 @section('script')
     <script>
+        $(document).ready(function(){
         $(function() {
             $('input[type="file"]').on('change',function(){
                 let fileName = $(this).val().replace(/^.*[\\\/]/, '')
                 $(this).next('.custom-file-label').html(fileName)
             })
+        });
+
+
+
+            $( "#addExtension" ).click(function() {
+                let extension = $("#extension").val();
+                let nbExt = $("#extensions > div").length;
+                if(extension){
+                    $( "#extensions").append(
+                        '<div class="input-group">' +
+                        '<input class="form-control" id="Extensions_'+nbExt+'" name="Extensions['+nbExt+']" value="'+extension+'"/>' +
+                        '<a type="button" class="btn btn-danger btn-sm pull-right deleteNewExtension" data-toggle="tooltip" title="Supprimer l\'extension"><i class="fas fa-times fa-lg"></i></a>' +
+                        '</div>'
+                    );
+                    $("#extension").val('');
+                    $( "a.deleteNewExtension" ).bind("click", function(){
+                        $(this).parent('div').remove();
+                    });
+
+
+
+
+                }
+
+                else{
+                    swal({
+                        title: '@lang('Veuillez saisir une valeur')',
+                        type: 'warning'
+                    })
+                }
+            });
+
+
+
+        $(function() {
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            })
+            $('[data-toggle="tooltip"]').tooltip()
+            $('a.deleteExtension').click(function(e) {
+                let that = $(this);
+                e.preventDefault();
+                swal({
+                    title: '@lang('Vraiment supprimer cette extension?')',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: '@lang('Oui')',
+                    cancelButtonText: '@lang('Non')'
+                }).then(function () {
+                    $('[data-toggle="tooltip"]').tooltip('hide');
+                    $.ajax({
+                        url: that.attr('href'),
+                        type: 'DELETE'
+                    })
+                        .done(function () {
+                            that.parent('div').remove()
+                        })
+                        .fail(function () {
+                                swal({
+                                    title: '@lang('Il semble y avoir une erreur sur le serveur, veuillez réessayer plus tard...')',
+                                    type: 'warning'
+                                })
+                            }
+                        )
+                })
+            })
         })
+
+        });
     </script>
 @endsection

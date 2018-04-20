@@ -52,6 +52,10 @@ Route::middleware('admin')->group(function () {
         'except' => 'show'
     ]);
 
+    Route::resource ('extension', 'ExtensionController', [
+        'except' => 'show'
+    ]);
+
 });
 
 

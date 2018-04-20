@@ -9,6 +9,7 @@
 namespace GameSheets\Repositories;
 
 
+use GameSheets\Models\Extension;
 use GameSheets\Models\Fiche;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -37,6 +38,18 @@ class FicheRepository
         $fiche->save();
         $fiche->plateformes()->attach($request->Plateformes);
         $fiche->pictogrammes()->attach($request->Pictogrammes);
+
+        if(isset($request->Extensions)){
+            foreach ($request->Extensions as $extension){
+                $objExtension = new Extension;
+                $objExtension->nom = $extension;
+                $objExtension->fiche()->associate($fiche);
+                $objExtension->save();
+            }
+        }
+
+
+
     }
 
     /**
@@ -69,6 +82,21 @@ class FicheRepository
 
         $fiche->plateformes()->sync($request->Plateformes);
         $fiche->pictogrammes()->sync($request->Pictogrammes);
+
+        foreach ($request->Extensions as $key => $extension){
+
+           $existingExt =  Extension::find($key);
+
+            if(is_null($existingExt)){
+                $objExtension = new Extension;
+                $objExtension->nom = $extension;
+                $objExtension->fiche()->associate($fiche);
+                $objExtension->save();
+            }
+            else
+                $existingExt->update(['nom' => $extension]);
+
+        }
     }
 
     /**
@@ -78,6 +106,7 @@ class FicheRepository
         Storage::disk('public')->delete($request->image);
         $request->plateformes()->detach();
         $request->pictogrammes()->detach();
+        $request->extensions()->delete();
 
     }
 

@@ -14,14 +14,14 @@
                'required' => true,
                ])
 
-            <div class="form-group{{ $errors->has('fiche') ? ' is-invalid' : '' }}">
+            <div class="form-group{{ $errors->has('image') ? ' is-invalid' : '' }}">
                 <label for="image">@lang('Image')</label>
                 <div class="custom-file">
-                    <input type="file" id="image" name="image" class="{{ $errors->has('fiche') ? ' is-invalid ' : '' }}custom-file-input" required>
+                    <input type="file" id="image" name="image" class="{{ $errors->has('image') ? ' is-invalid ' : '' }}custom-file-input" required>
                     <label class="custom-file-label" for="image"></label>
-                    @if ($errors->has('fiche'))
+                    @if ($errors->has('image'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('fiche') }}
+                            {{ $errors->first('image') }}
                         </div>
                     @endif
                 </div>
@@ -62,7 +62,6 @@
 
             <div class="form-group">
                 <div id="extensions">
-                    <ul></ul>
                 </div>
             </div>
 
@@ -134,7 +133,19 @@
     </script>
     <script>
         $( "#addExtension" ).click(function() {
-            $( "#extensions").find(">ul" ).append( "<li>"+$("#extension").val()+"</li>" );
+            let extension = $("#extension").val();
+            let nbExt = $("#extensions > div").length;
+            if(extension){
+
+                $( "#extensions").append(
+                    '<div class="input-group">' +
+                    '<input class="form-control" id="Extensions_'+nbExt+'" name="Extensions['+nbExt+']" value="'+extension+'"/>' +
+                    ' <button type="button" class="btn btn-warning"><i class="fa fa-times"</button>' +
+                    '</div>'
+                );
+                $("#extension").val('');
+            }
+
         });
 
     </script>

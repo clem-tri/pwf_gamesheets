@@ -8,6 +8,7 @@ use GameSheets\Models\Fiche;
 use GameSheets\Models\Genre;
 use GameSheets\Models\Pictogramme;
 use GameSheets\Models\Plateforme;
+use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
             view()->share('plateformes', Plateforme::all());
             view()->share('fiches', Fiche::all());
         }
+
+        AbstractPaginator::defaultView("pagination::bootstrap-4");
     }
 
     /**

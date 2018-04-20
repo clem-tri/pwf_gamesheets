@@ -9,30 +9,13 @@
 </style>
 @endsection
 @section('content')
-<div class="container">
-    {{--<div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>--}}
+<div class="container-fluid">
 
         <div class="card-columns">
 
 
             @foreach ($fiches as $fiche)
-                <div class="card h-100" style="width: 18rem;">
+                <div class="card" style="width: 18rem;">
                     <img class="card-img-top" src="{{asset("storage/$fiche->image")}}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{$fiche->nom}}</h5>
@@ -44,8 +27,17 @@
                 </div>
             @endforeach
 
+
+
+    </div>
+
+    <div class="d-flex justify-content-center">
+        {{ $fiches->links() }}
     </div>
 
 </div>
 
 @endsection
+
+
+

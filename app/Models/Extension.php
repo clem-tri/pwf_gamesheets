@@ -9,4 +9,9 @@ class Extension extends Model
     protected $fillable = [
         'nom'
     ];
+
+    public function fiche()
+    {
+        return $this->belongsTo(Fiche::class);
+    }
 }

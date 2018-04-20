@@ -32,11 +32,11 @@
                 <hr>
                 <div class="form-group">
                     <h5 class="card-title">Plateformes :</h5>
-                    <p class="card-text">
+
                         @foreach($fiche->plateformes as $plateforme)
-                            {{$plateforme->nom}}
+                        <div> {{$plateforme->nom}} </div>
                         @endforeach
-                    </p>
+
                 </div>
                     @endif
             <hr>
@@ -58,6 +58,16 @@
             <p class="card-text">{{$fiche->synopsis}}</p>
             @endif
             </div>
+
+            @if(count($fiche->extensions)> 0)
+                <hr>
+                <div class="form-group">
+                    <h5 class="card-title">Extensions :</h5>
+                        @foreach($fiche->extensions as $extension)
+                            <div>{{$extension->nom}}</div>
+                        @endforeach
+                </div>
+            @endif
 
             <hr>
             <div class="form-group">
