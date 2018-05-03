@@ -19,6 +19,21 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
 
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle
+        @isset($genre)
+                {{ currentRoute(route('genre', $genre->slug)) }}
+                @endisset
+                        " href="#" id="navbarDropdownCat" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @lang('Genres')
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownCat">
+                    @foreach($genres as $genre)
+                        <a class="dropdown-item" href="{{ route('genre', $genre->slug) }}">{{ $genre->nom }}</a>
+                    @endforeach
+                </div>
+            </li>
+
             @admin
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle{{ currentRoute(
@@ -79,7 +94,7 @@
             <li class="nav-item{{ currentRoute(route('login')) }}"><a class="nav-link" href="{{ route('login') }}">@lang('Connexion')</a></li>
             <li class="nav-item{{ currentRoute(route('register')) }}"><a class="nav-link" href="{{ route('register') }}">@lang('Inscription')</a></li>
             @else
-                <li class="nav-item"><a class="nav-link" href="#">@lang('Bienvenue') {{Auth::user()->name}}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('user',Auth::user()->id ) }}">{{Auth::user()->name}}</a></li>
                 <li class="nav-item">
                     <a id="logout" class="nav-link" href="{{ route('logout') }}">@lang('Déconnexion')</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hide">

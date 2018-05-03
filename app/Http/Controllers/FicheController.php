@@ -3,6 +3,8 @@
 namespace GameSheets\Http\Controllers;
 
 use GameSheets\Models\Fiche;
+use GameSheets\Models\Genre;
+use GameSheets\Models\User;
 use GameSheets\Repositories\FicheRepository;
 use Illuminate\Http\Request;
 
@@ -111,9 +113,23 @@ class FicheController extends Controller
      * @throws \Exception
      */
     public function destroy(Fiche $fiche)
-    {
+    {   $this->authorize('delete', $fiche);
         $this->repository->destroy($fiche);
         $fiche->delete();
         return response()->json();
+    }
+
+    public function genre($slug){
+        $genre = Genre::whereSlug($slug)->firstorFail();
+
+        $fiches = $this->repository->getFichesForGenre($slug);
+
+        return view('home', compact('genre', 'fiches'));
+    }
+
+    public function user(User $user)
+    {
+        $fiches = $this->repository->getFichesForUser($user->id);
+        return view('home', compact('user', 'fiches'));
     }
 }

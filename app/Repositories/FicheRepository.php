@@ -83,19 +83,21 @@ class FicheRepository
         $fiche->plateformes()->sync($request->Plateformes);
         $fiche->pictogrammes()->sync($request->Pictogrammes);
 
-        foreach ($request->Extensions as $key => $extension){
+        if(isset($request->Extensions)) {
 
-           $existingExt =  Extension::find($key);
+            foreach ($request->Extensions as $key => $extension) {
 
-            if(is_null($existingExt)){
-                $objExtension = new Extension;
-                $objExtension->nom = $extension;
-                $objExtension->fiche()->associate($fiche);
-                $objExtension->save();
+                $existingExt = Extension::find($key);
+
+                if (is_null($existingExt)) {
+                    $objExtension = new Extension;
+                    $objExtension->nom = $extension;
+                    $objExtension->fiche()->associate($fiche);
+                    $objExtension->save();
+                } else
+                    $existingExt->update(['nom' => $extension]);
+
             }
-            else
-                $existingExt->update(['nom' => $extension]);
-
         }
     }
 
@@ -108,6 +110,19 @@ class FicheRepository
         $request->pictogrammes()->detach();
         $request->extensions()->delete();
 
+    }
+
+    public function getFichesForGenre($slug){
+        return Fiche::latest()->whereHas('genre',function($query) use ($slug){
+            $query->whereSlug($slug);
+        })->paginate(config('app.pagination'));
+    }
+
+    public function getFichesForUser($id)
+    {
+        return Fiche::latest()->whereHas('user', function ($query) use ($id) {
+            $query->whereId($id);
+        })->paginate(config('app.pagination'));
     }
 
 }

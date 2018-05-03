@@ -2,6 +2,8 @@
 
 namespace GameSheets\Providers;
 
+use GameSheets\Models\Fiche;
+use GameSheets\Policies\FichePolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'GameSheets\Model' => 'GameSheets\Policies\ModelPolicy',
+        Fiche::class => FichePolicy::class
     ];
 
     /**

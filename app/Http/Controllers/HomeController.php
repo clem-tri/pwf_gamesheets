@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $fiches = Fiche::paginate(config('app.pagination'));
+        $fiches = Fiche::orderBy('created_at','desc')->paginate(config('app.pagination'));
 
         return view('home', compact('fiches'));
     }

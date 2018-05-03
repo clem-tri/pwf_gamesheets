@@ -14,16 +14,14 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('index');
+
 
 //contact
 
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
-
+//
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -57,8 +55,9 @@ Route::middleware('admin')->group(function () {
     ]);
 
 });
-
-
+//
+Route::name('genre')->get('genre/{slug}', 'FicheController@genre');
+Route::name('user')->get('user/{user}', 'FicheController@user');
 
 //
 

@@ -34,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
             view()->share('fiches', Fiche::all());
         }
 
+        Blade::if('adminOrOwner', function ($id) {
+            return auth()->check() && (auth()->id() === $id || auth()->user()->role === 'admin');
+        });
+
         AbstractPaginator::defaultView("pagination::bootstrap-4");
     }
 

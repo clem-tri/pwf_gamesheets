@@ -64,7 +64,7 @@
                 <div class="form-group">
                     <h5 class="card-title">Extensions :</h5>
                         @foreach($fiche->extensions as $extension)
-                            <div>{{$extension->nom}}</div>
+                            <div><span class="badge badge-pill badge-light">{{$extension->nom}}</span></div>
                         @endforeach
                 </div>
             @endif
