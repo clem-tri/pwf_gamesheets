@@ -84,6 +84,7 @@
             @endadmin
             @auth
                 <li class="nav-item{{ currentRoute(route('fiche.create')) }}"><a class="nav-link" href="{{ route('fiche.create') }}">@lang('Créer une fiche')</a></li>
+                <li class="nav-item{{ currentRoute(route('recueil.create')) }}"><a class="nav-link" href="{{ route('recueil.create') }}">@lang('Créer un recueil')</a></li>
             @endauth
             <li class="nav-item">
                 <a class="nav-link" href="{{route('contact')}}">Contact</a>

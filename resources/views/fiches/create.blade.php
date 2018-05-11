@@ -73,7 +73,7 @@
                'name' => 'genre_id',
                'listoptions'=> $genres->sortBy("nom"),
                'property' => 'nom',
-               'required' => true,
+               'required' => true
                ])
 
             @include('partials.form-group-select', [
@@ -81,7 +81,7 @@
                 'name' => 'developpeur_id',
                 'listoptions'=> $developpeurs->sortBy("nom"),
                 'property' => 'nom',
-                'required' => true,
+                'required' => true
                 ])
 
 
@@ -90,7 +90,7 @@
                 'name' => 'editeur_id',
                 'listoptions'=> $editeurs->sortBy("nom"),
                 'property' => 'nom',
-                'required' => true,
+                'required' => true
                 ])
 
             <div class="form-group{{ $errors->has('fiche') ? ' is-invalid' : '' }}">

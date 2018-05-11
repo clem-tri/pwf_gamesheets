@@ -98,7 +98,7 @@
                'listoptions'=> $genres,
                'value' => $fiche->genre->id,
                'property' => 'nom',
-               'required' => true,
+               'required' => true
                ])
 
             @include('partials.form-group-select', [
@@ -107,7 +107,7 @@
                 'listoptions'=> $developpeurs,
                 'value' => $fiche->developpeur->id,
                 'property' => 'nom',
-                'required' => true,
+                'required' => true
                 ])
 
 
@@ -117,7 +117,7 @@
                 'listoptions'=> $editeurs,
                 'value' => $fiche->editeur->id,
                 'property' => 'nom',
-                'required' => true,
+                'required' => true
                 ])
 
             <div class="form-group">

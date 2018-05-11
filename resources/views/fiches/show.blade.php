@@ -3,8 +3,6 @@
     @component('components.card-details')
         @slot('title')
             <h5 class="card-title"> {{$fiche->nom}}</h5>
-           {{-- <button type="button" class="btn btn-success pull-right"><i class="fa fa-book"></i> EPUB</button>
-            <button type="button" class="btn btn-danger pull-right"><i class="fa fa-file-pdf"></i> PDF</button>--}}
         @endslot
         @slot('slot')
 

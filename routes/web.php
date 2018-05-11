@@ -65,4 +65,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('fiche', 'FicheController', [
         'only' => ['show','create', 'store', 'destroy']
     ]);
+
+    Route::post('recueil/generate', 'RecueilController@generate')->name('recueil.generate');;
+    Route::resource('recueil', 'RecueilController', [
+        'only' => ['create', 'generate']
+    ]);
 });
