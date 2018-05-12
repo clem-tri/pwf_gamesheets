@@ -12,16 +12,16 @@
             {{ csrf_field() }}
 
             <div class="form-group">
-            <label for="existingFiches">Selectionner les fiches que vous voulez inclure</label>
-            <select id="existingFiches" data-class="btn-primary" class="four-boot-select" multiple>
+            <label for="Fiches">Selectionner les fiches que vous voulez inclure</label>
+            <select id="Fiches" name="Fiches[]" data-class="btn-primary" class="four-boot-select" multiple>
                 @foreach($fiches as $fiche)
                     <option value="{{$fiche->id}}">{{$fiche->nom}}</option>
                 @endforeach
             </select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-success pull-right" name="ePub"><i class="fa fa-book"></i> EPUB</button>
-                <button type="submit" class="btn btn-danger pull-right" name="pdf"><i class="fa fa-file-pdf"></i> PDF</button>
+                <button type="submit" class="btn btn-success pull-right" name="generate" value="epub"><i class="fa fa-book"></i> EPUB</button>
+                <button type="submit" class="btn btn-danger pull-right" name="generate" value="pdf"><i class="fa fa-file-pdf"></i> PDF</button>
             </div>
 
 
