@@ -187,28 +187,30 @@ class RecueilController extends Controller
                     $pictogrammes = "<div class='form-group'>$pictogrammes</div>";
                 }
 
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+
 
                 // Image jaquette
                 $book->addFile("img/".$fiche->image,
-                    $fiche->nom,
+                    uniqid(),
                     file_get_contents(asset("storage/".$fiche->image)),
-                    "image/jpeg");
+                    finfo_file($finfo,"storage/".$fiche->image));
 
 
                 //Image éditeur
                 if(!in_array("img/".$editeur->logo,$book->getFileList())){
                     $book->addFile("img/".$editeur->logo,
-                        $editeur->nom,
+                        uniqid(),
                         file_get_contents(asset("storage/".$editeur->logo)),
-                        "image/png");
+                        finfo_file($finfo,"storage/".$editeur->logo));
                 }
 
                 //Image developpeur
                 if(!in_array("img/".$dev->logo,$book->getFileList())) {
                     $book->addFile("img/" . $dev->logo,
-                        $dev->nom,
+                        uniqid(),
                         file_get_contents(asset("storage/" . $dev->logo)),
-                        "image/png");
+                        finfo_file($finfo,"storage/".$dev->logo));
                 }
 
                 //Pictogrammes fiche
@@ -216,9 +218,9 @@ class RecueilController extends Controller
 
                     if(!in_array("img/".$pictogramme->logo, $book->getFileList())){
                         $book->addFile("img/" . $pictogramme->logo,
-                            $pictogramme->nom,
+                            uniqid(),
                             file_get_contents(asset("storage/" . $pictogramme->logo)),
-                            "image/png");
+                            finfo_file($finfo,"storage/".$pictogramme->logo));
                     }
                 }
                 // Contenu HTML
