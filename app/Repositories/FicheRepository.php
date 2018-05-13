@@ -58,11 +58,12 @@ class FicheRepository
      */
     public function update($request, $fiche){
 
-        if($request->logo != null){
+        if($request->image != null){
+
             // on supprime la photo actuelle
-            Storage::disk('public')->delete($fiche->logo);
+            Storage::disk('public')->delete($fiche->image);
             // on ajoute la nouvelle
-            $path = Storage::disk('public')->put('', $request->file('logo'));
+            $path = Storage::disk('public')->put('', $request->file('image'));
 
 
             $fiche->image = $path;

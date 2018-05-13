@@ -116,11 +116,11 @@ class RecueilController extends Controller
 
             $blogurl = "pwf-gamesheets.fr";
             $cssData = file_get_contents(asset("css/app.css"));
-            $uniqid = uniqid();
+            $creationDate = date("d-m-Y-h-i-s");
 
             $book->setLanguage('fr');
 
-            $book->setTitle("Recueil Gamesheets ".$uniqid);
+            $book->setTitle("Recueil Gamesheets".$creationDate);
             $authorname = Auth::user()->name;
             $book->setAuthor($authorname, $authorname);
             $book->setIdentifier($blogurl . "&amp;stamp=" . time(), EPub::IDENTIFIER_URI);
@@ -150,8 +150,8 @@ class RecueilController extends Controller
                 if($fiche->site){
                     $site = "
                 <div class='form-group'>
-                    <h5 class='card-title'>Site internet :</h5>
-                    <p class='card-text'><a href='$fiche->site'>$fiche->site</a></p>
+                    <h5 class='title'>Site internet :</h5>
+                    <p class='text'><a href='$fiche->site'>$fiche->site</a></p>
                 </div>
                 <hr/>";
                 }
@@ -171,8 +171,8 @@ class RecueilController extends Controller
                    $extensions=
 
                        "<div class='form-group'>
-                               <h5 class='card-title'>Extensions :</h5>
-                                <p class='card-text'>".$extensions." </p>
+                               <h5 class='title'>Extensions :</h5>
+                                <p class='text'>".$extensions." </p>
                         </div>
                             <hr/>";
                 }
@@ -226,50 +226,50 @@ class RecueilController extends Controller
                     $fiche->nom,
                     $fiche->nom.".html",
                     $content_start .
-                        "<div class='card text-center'>
+                        "<div class='text-center'>
                             
-                            <div class='card-header'>
-                               <h5 class='card-title'>$fiche->nom</h5>
+                            <div class='header'>
+                               <h5 class='title'>$fiche->nom</h5>
                             </div>
                        
-                            <div class='card-body'>
+                            <div class='body'>
                             
                                 <div class='form-group'>
-                                <img class='card-img-top' style='width: 50%!important;'  src='img/$fiche->image' alt='$fiche->nom'/>
+                                <img  style='width: 50%!important;'  src='img/$fiche->image' alt='$fiche->nom'/>
                                 </div>
                             
                             <div class='form-group'>
-                            <h5 class='card-title'>Editeur / Developpeur :</h5>
+                            <h5 class='title'>Editeur / Developpeur :</h5>
                                 <figure>
                                 <img style='width: 20%!important;' alt='Editeur' class='img-responsive w-25 h-25' src='img/$editeur->logo'/>
-                                <figcaption class='card-text font-weight-bold font-italic'>$editeur->nom</figcaption>
+                                <figcaption class='text font-weight-bold font-italic'>$editeur->nom</figcaption>
                                 </figure>
                                 
                                 <figure>
                                 <img  style='width: 20%!important;' alt='Developpeur' class='img-responsive w-25 h-25' src='img/$dev->logo'/>
-                                <figcaption class='card-text font-weight-bold font-italic'>$dev->nom</figcaption>
+                                <figcaption class='text font-weight-bold font-italic'>$dev->nom</figcaption>
                                 </figure>
                             </div>
                             <hr/>
                              <div class='form-group'>
-                                <h5 class='card-title'>Plateformes :</h5>
+                                <h5 class='title'>Plateformes :</h5>
                                 $plateformes
                             </div>
                             
                             <hr/>
                              <div class='form-group'>
-                                <h5 class='card-title'>Genre :</h5>
-                                <p class='card-text'>$genre->nom</p>
+                                <h5 class='title'>Genre :</h5>
+                                <p class='text'>$genre->nom</p>
                             </div>
                             <hr/>
                              <div class='form-group'>
-                                <h5 class='card-title'>Sortie :</h5>
-                                <p class='card-text'>". date("d/m/Y",strtotime($fiche->annee)) ."</p>
+                                <h5 class='title'>Sortie :</h5>
+                                <p class='text'>". date("d/m/Y",strtotime($fiche->annee)) ."</p>
                             </div>
                             <hr/>
                              <div class='form-group'>
-                                <h5 class='card-title'>Synopsis :</h5>
-                                <p class='card-text'>$fiche->synopsis</p>
+                                <h5 class='title'>Synopsis :</h5>
+                                <p class='text'>$fiche->synopsis</p>
                             </div>
                             
                             <hr/>
@@ -281,8 +281,8 @@ class RecueilController extends Controller
                               
                             
                              <div class='form-group'>
-                                <h5 class='card-title'>Jouable en ligne :</h5>
-                                <p class='card-text'>
+                                <h5 class='title'>Jouable en ligne :</h5>
+                                <p class='text'>
                                 
                                     $enligne
                     
@@ -295,7 +295,7 @@ class RecueilController extends Controller
  
                             </div>
                             
-                        <div class='card-footer text-muted'>
+                        <div class='footer text-muted'>
                             Auteur : $author->name
                         </div>
 
