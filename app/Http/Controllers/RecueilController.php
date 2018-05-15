@@ -6,7 +6,7 @@ use GameSheets\Models\Fiche;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PHPePub\Core\EPub;
-
+use Codedge\Fpdf\Fpdf\Fpdf;
 class RecueilController extends Controller
 {
     /**
@@ -95,140 +95,152 @@ class RecueilController extends Controller
 
         if($request->generate == "epub"){
 
-            $selectedFiches = $request->Fiches;
-            $fichesData = Fiche::whereIn('id', $selectedFiches)->get();
-            $book = new EPub();
+            $this->createEpub($request);
+        }
 
-            $content_start =
-                "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-                . "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n"
-                . "    \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n"
-                . "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
-                . "<head>"
-                . "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n"
-                . "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\" />\n"
-                . "<title>Test Book</title>\n"
-                . "</head>\n"
-                . "<body>\n";
+        else{
+            $this->createPDF($request);
+        }
 
 
-            $content_end = "</body></html>";
 
-            $blogurl = "pwf-gamesheets.fr";
-            $cssData = file_get_contents(asset("css/app.css"));
-            $creationDate = date("d-m-Y-h-i-s");
+    }
 
-            $book->setLanguage('fr');
+    public function createEpub(Request $request){
+        $selectedFiches = $request->Fiches;
+        $fichesData = Fiche::whereIn('id', $selectedFiches)->get();
+        $book = new EPub();
 
-            $book->setTitle("Recueil Gamesheets".$creationDate);
-            $authorname = Auth::user()->name;
-            $book->setAuthor($authorname, $authorname);
-            $book->setIdentifier($blogurl . "&amp;stamp=" . time(), EPub::IDENTIFIER_URI);
-            $book->addCSSFile("styles.css", "css1", $cssData);
-            $cover = $content_start . "<h1>" . $book->getTitle() . "</h1>\n";
-            if ($authorname) {
-                $cover .= "<h2>By: $authorname</h2>\n";
-            }
-            $cover .= "<h2>From: <a href=\"$blogurl\">$blogurl</a></h2>";
-            $cover .= $content_end;
-            $book->buildTOC();
-            $book->addChapter($book->getTitle(), "Cover.html", $cover);
+        $content_start =
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+            . "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\"\n"
+            . "    \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n"
+            . "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n"
+            . "<head>"
+            . "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n"
+            . "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\" />\n"
+            . "<title>Test Book</title>\n"
+            . "</head>\n"
+            . "<body>\n";
 
-            foreach ($fichesData as $fiche){
 
-                // infos fiche
-                $enligne = $fiche->en_ligne == 1 ? 'Oui' : 'Non';
-                $genre = $fiche->genre;
-                $author = $fiche->user;
-                $editeur = $fiche->editeur;
-                $dev = $fiche->developpeur;
-                $site = '';
-                $plateformes = "";
-                $extensions = "";
-                $pictogrammes = "";
+        $content_end = "</body></html>";
 
-                if($fiche->site){
-                    $site = "
+        $blogurl = "pwf-gamesheets.fr";
+        $cssData = file_get_contents(asset("css/app.css"));
+        $creationDate = date("d-m-Y-h-i-s");
+
+        $book->setLanguage('fr');
+
+        $book->setTitle("Recueil Gamesheets".$creationDate);
+        $authorname = Auth::user()->name;
+        $book->setAuthor($authorname, $authorname);
+        $book->setIdentifier($blogurl . "&amp;stamp=" . time(), EPub::IDENTIFIER_URI);
+        $book->addCSSFile("styles.css", "css1", $cssData);
+        $cover = $content_start . "<h1>" . $book->getTitle() . "</h1>\n";
+        if ($authorname) {
+            $cover .= "<h2>By: $authorname</h2>\n";
+        }
+        $cover .= "<h2>From: <a href=\"$blogurl\">$blogurl</a></h2>";
+        $cover .= $content_end;
+        $book->buildTOC();
+        $book->addChapter($book->getTitle(), "Cover.html", $cover);
+
+        foreach ($fichesData as $fiche){
+
+            // infos fiche
+            $enligne = $fiche->en_ligne == 1 ? 'Oui' : 'Non';
+            $genre = $fiche->genre;
+            $author = $fiche->user;
+            $editeur = $fiche->editeur;
+            $dev = $fiche->developpeur;
+            $site = '';
+            $plateformes = "";
+            $extensions = "";
+            $pictogrammes = "";
+
+            if($fiche->site){
+                $site = "
                 <div class='form-group'>
                     <h5 class='title'>Site internet :</h5>
                     <p class='text'><a href='$fiche->site'>$fiche->site</a></p>
                 </div>
                 <hr/>";
-                }
+            }
 
-                // plateformes
-                foreach ($fiche->plateformes as $plateforme){
-                    $plateformes .= "<div> $plateforme->nom </div>";
-                }
+            // plateformes
+            foreach ($fiche->plateformes as $plateforme){
+                $plateformes .= "<div> $plateforme->nom </div>";
+            }
 
 
-                // extensions
-                foreach($fiche->extensions as $extension){
-                    $extensions.= " <div><span class='badge badge-pill badge-light'>$extension->nom</span></div>";
-                }
+            // extensions
+            foreach($fiche->extensions as $extension){
+                $extensions.= " <div><span class='badge badge-pill badge-light'>$extension->nom</span></div>";
+            }
 
-                if($extensions != ''){
-                   $extensions=
+            if($extensions != ''){
+                $extensions=
 
-                       "<div class='form-group'>
+                    "<div class='form-group'>
                                <h5 class='title'>Extensions :</h5>
                                 <p class='text'>".$extensions." </p>
                         </div>
                             <hr/>";
-                }
+            }
 
-                // pictogrammes
-                foreach($fiche->pictogrammes as $pictogramme){
-                    $pictogrammes .= "<img class='img-responsive' style='width: 20%!important;' src='img/$pictogramme->logo' />";
+            // pictogrammes
+            foreach($fiche->pictogrammes as $pictogramme){
+                $pictogrammes .= "<img class='img-responsive' style='width: 20%!important;' src='img/$pictogramme->logo' />";
 
-                }
+            }
 
-                if($pictogrammes != ''){
-                    $pictogrammes = "<div class='form-group'>$pictogrammes</div>";
-                }
+            if($pictogrammes != ''){
+                $pictogrammes = "<div class='form-group'>$pictogrammes</div>";
+            }
 
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
 
 
-                // Image jaquette
-                $book->addFile("img/".$fiche->image,
+            // Image jaquette
+            $book->addFile("img/".$fiche->image,
+                uniqid(),
+                file_get_contents(asset("storage/".$fiche->image)),
+                finfo_file($finfo,"storage/".$fiche->image));
+
+
+            //Image éditeur
+            if(!in_array("img/".$editeur->logo,$book->getFileList())){
+                $book->addFile("img/".$editeur->logo,
                     uniqid(),
-                    file_get_contents(asset("storage/".$fiche->image)),
-                    finfo_file($finfo,"storage/".$fiche->image));
+                    file_get_contents(asset("storage/".$editeur->logo)),
+                    finfo_file($finfo,"storage/".$editeur->logo));
+            }
 
+            //Image developpeur
+            if(!in_array("img/".$dev->logo,$book->getFileList())) {
+                $book->addFile("img/" . $dev->logo,
+                    uniqid(),
+                    file_get_contents(asset("storage/" . $dev->logo)),
+                    finfo_file($finfo,"storage/".$dev->logo));
+            }
 
-                //Image éditeur
-                if(!in_array("img/".$editeur->logo,$book->getFileList())){
-                    $book->addFile("img/".$editeur->logo,
+            //Pictogrammes fiche
+            foreach($fiche->pictogrammes as $pictogramme){
+
+                if(!in_array("img/".$pictogramme->logo, $book->getFileList())){
+                    $book->addFile("img/" . $pictogramme->logo,
                         uniqid(),
-                        file_get_contents(asset("storage/".$editeur->logo)),
-                        finfo_file($finfo,"storage/".$editeur->logo));
+                        file_get_contents(asset("storage/" . $pictogramme->logo)),
+                        finfo_file($finfo,"storage/".$pictogramme->logo));
                 }
-
-                //Image developpeur
-                if(!in_array("img/".$dev->logo,$book->getFileList())) {
-                    $book->addFile("img/" . $dev->logo,
-                        uniqid(),
-                        file_get_contents(asset("storage/" . $dev->logo)),
-                        finfo_file($finfo,"storage/".$dev->logo));
-                }
-
-                //Pictogrammes fiche
-                foreach($fiche->pictogrammes as $pictogramme){
-
-                    if(!in_array("img/".$pictogramme->logo, $book->getFileList())){
-                        $book->addFile("img/" . $pictogramme->logo,
-                            uniqid(),
-                            file_get_contents(asset("storage/" . $pictogramme->logo)),
-                            finfo_file($finfo,"storage/".$pictogramme->logo));
-                    }
-                }
-                // Contenu HTML
-                $book->addChapter(
-                    $fiche->nom,
-                    $fiche->nom.".html",
-                    $content_start .
-                        "<div class='text-center'>
+            }
+            // Contenu HTML
+            $book->addChapter(
+                $fiche->nom,
+                $fiche->nom.".html",
+                $content_start .
+                "<div class='text-center'>
                             
                             <div class='header'>
                                <h5 class='title'>$fiche->nom</h5>
@@ -304,21 +316,51 @@ class RecueilController extends Controller
                            
                         </div>"
 
-                       . $content_end);
-            }
-
-
-
-            $book->finalize();
-            $zipData = $book->sendBook($book->getTitle());
-        }
-
-        else{
-            var_dump("pdf");
-            die();
+                . $content_end);
         }
 
 
 
+        $book->finalize();
+        $zipData = $book->sendBook($book->getTitle());
+    }
+
+    public function createPDF(Request $request){
+
+        $fiches = Fiche::whereIn('id', $request->Fiches)->get();
+
+
+        $fpdf= new Fpdf();
+
+        foreach($fiches as $fiche){
+
+            //  dd($fiche->synopsis);
+
+            $fpdf->SetAutoPagebreak(False);
+            $fpdf->SetMargins(10,10,10);
+            $fpdf->AliasNbPages();
+            $fpdf->AddPage();
+            // Police Arial gras 15
+            $fpdf->SetFont('Arial','B', 24);
+            // Décalage à droite
+            $fpdf->Cell(80);
+            // Titre
+            $fpdf->Cell(30,10,$fiche->nom,0,0,'C');
+
+            // Saut de ligne
+            $fpdf->Ln(20);
+            $fpdf->SetFont('Arial', '',12);
+            $fpdf->Image("storage/".$fiche->image);
+            $fpdf->Ln(5);
+            $fpdf->MultiCell(0,5,utf8_decode($fiche->synopsis));
+
+            $fpdf->SetY(-15);
+            $fpdf->SetFont('Arial','I',8);
+            $fpdf->Cell(0,10,'Page '.$fpdf->PageNo().'/{nb}',0,0,'C');
+
+        }
+
+        $fpdf->Output();
+        exit;
     }
 }
