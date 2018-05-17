@@ -331,10 +331,10 @@ class RecueilController extends Controller
 
 
         $fpdf= new Fpdf();
+        $fpdf->SetTitle('Recueil Gamesheets'. date('Y-m-d-h-i-s'));
 
         foreach($fiches as $fiche){
 
-            //  dd($fiche->synopsis);
 
             $fpdf->SetAutoPagebreak(False);
             $fpdf->SetMargins(10,10,10);
@@ -345,22 +345,158 @@ class RecueilController extends Controller
             // Décalage à droite
             $fpdf->Cell(80);
             // Titre
-            $fpdf->Cell(30,10,$fiche->nom,0,0,'C');
-
-            // Saut de ligne
-            $fpdf->Ln(20);
+            $fpdf->Cell(30,0,$fiche->nom,0,0,'C');
             $fpdf->SetFont('Arial', '',12);
-            $fpdf->Image("storage/".$fiche->image);
-            $fpdf->Ln(5);
+
+
+            // Fiche image
+            list($widthJaquette, $heightJaquette, $type, $attr) = getimagesize("storage/".$fiche->image);
+            $widthJaquette = ($widthJaquette / ($widthJaquette/60));
+            $heightJaquette = ($heightJaquette / ($heightJaquette/60));
+
+
+            $fpdf->Cell($widthJaquette,
+                $heightJaquette,
+                "",
+                0,
+                1,
+                'C',
+                $fpdf->Image("storage/".$fiche->image,75,30, $widthJaquette)
+            );
+
+            // Image editeur
+            list($widthEditeur, $heightEditeur, $type, $attr) = getimagesize("storage/".$fiche->editeur->logo);
+            $widthEditeur= ($widthEditeur / ($widthEditeur/15));
+            $heightEditeur = ($heightEditeur / ($heightEditeur/15));
+
+
+            $fpdf->Cell($widthEditeur,
+                $heightEditeur,
+                "",
+                0,
+                1,
+                'C',
+                $fpdf->Image("storage/".$fiche->editeur->logo,75,120, $widthEditeur)
+            );
+
+            // Image dev
+            list($widthDev, $heightDev, $type, $attr) = getimagesize("storage/".$fiche->developpeur->logo);
+            $widthDev= ($widthDev / ($widthDev/15));
+            $heightDev = ($heightDev / ($heightDev/15));
+
+
+            $fpdf->Cell($widthDev,
+                $heightDev,
+                "",
+                0,
+                1,
+                'C',
+                $fpdf->Image("storage/".$fiche->developpeur->logo,120,120, $widthDev)
+            );
+
+            // Plateformes
+            $fpdf->Ln(60);
+            $fpdf->SetFont('Arial','B',11);
+            $fpdf->Cell(30,10,"Plateformes",0,0,'C');
+            $fpdf->SetFont('Arial','',12);
+
+            $plateformes = '';
+            foreach ($fiche->plateformes as $plateforme) {
+               $plateformes .= $plateforme->nom. " | ";
+            }
+
+            $fpdf->MultiCell(0,10,utf8_decode($plateformes));
+
+            // Genre
+
+            $fpdf->SetFont('Arial','B',11);
+            $fpdf->Cell(30,10,"Genre",0,0,'C');
+            $fpdf->SetFont('Arial','',12);
+            $fpdf->MultiCell(0,10,utf8_decode($fiche->genre->nom));
+
+            // Date de sortie
+
+            $fpdf->SetFont('Arial','B',11);
+            $fpdf->Cell(30,10,"Sortie",0,0,'C');
+            $fpdf->SetFont('Arial','',12);
+            $fpdf->MultiCell(0,10,utf8_decode(date("d/m/Y",strtotime($fiche->annee))));
+
+            // Synopsis
+
+            $fpdf->SetFont('Arial','B',11);
+            $fpdf->Cell(30,10,"Synopsis",0,0,'C');
+            $fpdf->SetFont('Arial','',12);
+
             $fpdf->MultiCell(0,5,utf8_decode($fiche->synopsis));
+
+            // Extensions
+
+            if(count($fiche->extensions) > 0) {
+
+                $fpdf->SetFont('Arial', 'B', 11);
+                $fpdf->Cell(30, 10, "Extensions", 0, 0, 'C');
+                $fpdf->SetFont('Arial', '', 12);
+
+                $extensions = '';
+                foreach ($fiche->extensions as $extension) {
+                    $extensions .= $extension->nom . " | ";
+                }
+
+                $fpdf->MultiCell(0,10,utf8_decode($extensions));
+            }
+
+
+            // Jouable en ligne
+
+            $fpdf->SetFont('Arial','B',11);
+            $fpdf->Cell(30,10,"Jouable en ligne",0,0,'C');
+            $fpdf->SetFont('Arial','',12);
+
+            $enligne = $fiche->en_ligne == 1 ? 'Oui' : 'Non';
+            $fpdf->MultiCell(0,10,utf8_decode($enligne));
+
+
+            // Site internet
+
+            if($fiche->site != ''){
+                $fpdf->SetFont('Arial','B',11);
+                $fpdf->Cell(30,10,"Site internet",0,0,'C');
+                $fpdf->SetFont('Arial','',12);
+                $fpdf->SetTextColor(0,0,255);
+                $fpdf->MultiCell(0,10,utf8_decode($fiche->site));
+                $fpdf->SetTextColor(0,0,0);
+            }
+
+            // Pictogrammes
+
+
+
+
+                foreach ($fiche->pictogrammes as $key => $pictogramme) {
+                    $fpdf->Cell(50,
+                        0,
+                        "",
+                        0,
+                        1,
+                        'C',
+                        $fpdf->Image("storage/".$pictogramme->logo,70 + ($key * 15),250, $widthDev)
+                    );
+                }
+
+
+
+            // Pied de page
 
             $fpdf->SetY(-15);
             $fpdf->SetFont('Arial','I',8);
             $fpdf->Cell(0,10,'Page '.$fpdf->PageNo().'/{nb}',0,0,'C');
+            $fpdf->SetX(190);
+            $fpdf->Cell(0,10,"Auteur: ".$fiche->user->name,0,0,'C');
+
 
         }
 
-        $fpdf->Output();
+        $fpdf->Output('D', 'Recueil Gamesheets'. date('Y-m-d-h-i-s').'.pdf');
         exit;
     }
 }
