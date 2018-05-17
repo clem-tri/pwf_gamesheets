@@ -13,7 +13,10 @@
 
             <div class="form-group">
             <label for="Fiches">Selectionner les fiches que vous voulez inclure</label>
-            <select id="Fiches" name="Fiches[]" data-class="btn-primary" class="four-boot-select" multiple required>
+            <select id="Fiches" name="Fiches[]" data-class="btn-primary"
+                    multiple data-live-search="true"
+                    data-selected-text-format="count > 3"
+                    class="four-boot-select" multiple required>
                 @foreach($fiches as $fiche)
                     <option value="{{$fiche->id}}">{{$fiche->nom}}</option>
                 @endforeach

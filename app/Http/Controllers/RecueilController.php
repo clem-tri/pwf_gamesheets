@@ -126,7 +126,7 @@ class RecueilController extends Controller
 
         $content_end = "</body></html>";
 
-        $blogurl = "pwf-gamesheets.fr";
+        $blogurl = "pwf-gamesheets/";
         $cssData = file_get_contents(asset("css/app.css"));
         $creationDate = date("d-m-Y-h-i-s");
 
