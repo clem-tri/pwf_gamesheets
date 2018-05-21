@@ -5,7 +5,7 @@ Projet fiches ePub (LPW/Flux numérique)
 * Apache server
 * MySQL
 
-Commandes à effectuer avant de lancer l'application :
+## Commandes à effectuer avant de lancer l'application :
 * run `composer update` pour télécharger le dossier vendor
 * run `npm install` pour installer les dépendences
 * run `php artisan storage:link` pour afficher correctement les images des fiches
