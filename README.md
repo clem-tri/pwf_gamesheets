@@ -1,6 +1,9 @@
 # pwf_gamesheets
 Projet fiches ePub (LPW/Flux numérique)
-* require PHP ^7.1.3
+## Requirements 
+* PHP ^7.1.3
+* Apache server
+* MySQL
 
 Commandes à effectuer avant de lancer l'application :
 * run `composer update` pour télécharger le dossier vendor
@@ -19,6 +22,6 @@ Commandes à effectuer avant de lancer l'application :
 
 ## Virtualhost (conseillé)
 
-Sur WAMP (Vos VirtualHosts -> Gestion VirtualHost) ou autre, créer un virtualhost pointant vers votre le dossier public/ du projet
+Sur WAMP (Vos VirtualHosts -> Gestion VirtualHost) ou autre, créer un virtualhost pointant vers le dossier public/ du projet
 
 Ne pas oublier de redémarrer les services une fois effectué
